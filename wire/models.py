@@ -1,6 +1,30 @@
 from django.db import models
 from django.db.models import UniqueConstraint
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import AbstractUser
+
+
+class CustomUser(AbstractUser):
+    """Кастомна модель користувача"""
+
+    ROLE_CHOICES = [
+        ('admin', 'Адміністратор'),
+        ('manager', 'Менеджер'),
+        ('storeleeper', 'Комірник'),
+        ('viewer', 'Переглядач')
+    ]
+
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='viewer', verbose_name="Роль")
+    department = models.CharField(max_length=100, blank=True, verbose_name="Відділ")
+    
+    class Meta:
+        db_table = "custom_user"
+        verbose_name = "Користувач"
+        verbose_name_plural = "Користувачі"
+        ordering = ['username']
+    
+    def __str__(self):
+        return f"{self.username} ({self.get_role_display()})"
 
 
 class WireShape(models.TextChoices):
@@ -159,3 +183,4 @@ class WirePiece(models.Model):
 
     def __str__(self):
         return f"{self.wire_variant} / {self.length_m}m"
+
