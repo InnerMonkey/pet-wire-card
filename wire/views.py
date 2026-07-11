@@ -17,4 +17,10 @@ class WireTypeListView(ListView):
     paginate_by = 50
 
 
+class WirePieceListView(ListView):
+    model = WirePiece
+    template_name = 'wire/wirepiece_list.html'
+    context_object_name = 'pieces'
+    paginate_by = 50
+    
 # Create your views here.

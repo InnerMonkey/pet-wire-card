@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Шматки дротів</title>
+</head>
+<body>
+
+    <h1>Шматки дротів</h1>
+
+    <table border="1" cellpadding="5">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Варіант</th>
+                <th>Довжина</th>
+                <th>Локація</th>
+                <th>Статус</th>
+                <th>Дата</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for piece in pieces %}
+                <tr>
+                    <td>{{ piece.id }}</td>
+                    <td>{{ piece.wire_variant }}</td>
+                    <td>{{ piece.length_m }}</td>
+                    <td>{{ piece.location }}</td>
+                    <td>{{ piece.status }}</td>
+                    <td>{{ piece.created_at }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="7">Записів не знайдено.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>
