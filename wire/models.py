@@ -28,8 +28,8 @@ class CustomUser(AbstractUser):
 
 
 class WireShape(models.TextChoices):
-    FLAT = "flat", "Flat"
-    ROUND = "round", "Round"
+    FLAT = "flat", "Плоский"
+    ROUND = "round", "Круглий"
 
 
 class WireStatus(models.TextChoices):
@@ -160,7 +160,7 @@ class WireVariant(models.Model):
 
     def __str__(self):
         color_str = f" ({self.color.name})" if self.color else ""
-        return f"{self.wire_type} {self.cores} x {self.mm2}{color_str} - {self.manufacturer}"
+        return f"{self.wire_type} {self.cores} x {self.mm2} {self.shape} {color_str} - {self.manufacturer}"
 
 
 class WirePiece(models.Model):

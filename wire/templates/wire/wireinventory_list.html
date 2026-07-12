@@ -1,0 +1,81 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Типи проводів</title>
+    <link rel="stylesheet" href="{% static 'wire/css/inventory.css' %}">
+    <script src="https://unpkg.com/htmx.org@2.0.7"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Склад проводів</h1>
+        <div class="toolbar">
+            <input type="search" name="search" placeholder="Пошук типу..." hx-get="{% url 'wire:inventory-list' %}"
+                hx-trigger="keyup changed delay:300ms" hx-target="#cards" hx-select="#cards" hx-swap="outerHTML">
+        </div>
+        <div id="cards" class="cards">
+            {% for wire_type in wire_types %}
+            <details class="card">
+                <summary class="card-header">
+                    <div>
+                        <h2>{{ wire_type.name }}</h2>
+                        <div class="stats">
+                            Варіантів:
+                            <strong>{{ wire_type.variants.count }}</strong>
+                            &nbsp;&nbsp;
+                            Шматків:
+                            <strong>{{ wire_type.pieces_count }}</strong>
+                        </div>
+                    </div>
+                </summary>
+                <div class="card-body">
+                    {% for variant in wire_type.variants.all %}
+                    <div class="variant">
+                        <div class="variant-header">
+                            {{ variant.cores }} × {{ variant.mm2}} - {{variant.get_shape_display}}
+                            <span class="total">
+
+                                {{variant.pieces_count}} шт {{ variant.total_length|floatformat:1 }} м
+
+                            </span>
+                        </div>
+                        <div class="variant-info">
+                            <span>
+                                {{ variant.manufacturer }}
+                            </span>
+                            {% if variant.color %}
+                            <span>
+                                {{ variant.color }}
+                            </span>
+                            {% endif %}
+                        </div>
+                        <div class="pieces">
+                            {% for piece in variant.pieces.all %}
+                            <div class="piece">
+                                {{ piece.length_m|floatformat:-1 }} м
+                            </div>
+                            {% empty %}
+                            <div class="empty">
+                                Немає шматків
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p>Немає варіантів.</p>
+                    {% endfor %}
+                </div>
+            </details>
+            {% empty %}
+            <p>Немає типів проводів.</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+
+</html>

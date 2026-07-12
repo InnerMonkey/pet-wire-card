@@ -1,0 +1,251 @@
+/* ===========================
+   Загальні стилі
+=========================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f3f5f8;
+    color: #333;
+}
+
+.container {
+    width: 95%;
+    max-width: 1600px;
+    margin: 40px auto;
+}
+
+h1 {
+    margin-bottom: 30px;
+    color: #1f2937;
+}
+
+/* ===========================
+   Панель пошуку
+=========================== */
+
+.toolbar {
+    margin-bottom: 30px;
+}
+
+.toolbar input {
+    width: 350px;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+/* ===========================
+   Сітка карток
+=========================== */
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 25px;
+    align-items: start;
+}
+
+/* ===========================
+   Картка
+=========================== */
+
+.card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,.08);
+    transition: .2s;
+}
+
+.card:hover {
+    box-shadow: 0 8px 18px rgba(0,0,0,.15);
+}
+
+/* ===========================
+   Заголовок картки
+=========================== */
+
+.card summary {
+    list-style: none;
+}
+
+.card summary::-webkit-details-marker {
+    display: none;
+}
+
+.card-header {
+    background: #2563eb;
+    color: white;
+    padding: 18px 22px;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+}
+
+.card-header:hover {
+    background: #1d4ed8;
+}
+
+.card-header h2 {
+    margin-bottom: 10px;
+    font-size: 22px;
+}
+
+
+/* Стрілка */
+
+.card-header::after {
+    content: "▶";
+    position: absolute;
+    right: 20px;
+    top: 22px;
+    font-size: 16px;
+    transition: transform .2s ease;
+}
+
+.card[open] .card-header::after {
+    content: "▼";
+}
+
+.card[open] {
+    grid-column: 1 / -1;
+}
+/* ===========================
+   Статистика
+=========================== */
+
+.stats {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    font-size: 14px;
+}
+
+.stats strong {
+    color: white;
+}
+
+/* ===========================
+   Вміст картки
+=========================== */
+
+.card-body {
+    padding: 20px;
+}
+
+/* ===========================
+   Варіант проводу
+=========================== */
+
+.variant {
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.variant:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+}
+
+.variant-header {
+    font-size: 18px;
+    font-weight: bold;
+    color: #111827;
+    margin-bottom: 10px;
+}
+
+/* ===========================
+   Інформація про варіант
+=========================== */
+
+.variant-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 15px;
+    color: #6b7280;
+    font-size: 15px;
+}
+
+.total {
+    color: #2563eb;
+    background: #eef4ff;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+/* ===========================
+   Контейнер шматків
+=========================== */
+
+.pieces {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* ===========================
+   Шматок
+=========================== */
+
+.piece {
+    min-width: 65px;
+    padding: 8px 12px;
+    text-align: center;
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: .2s;
+}
+
+.piece:hover {
+    background: #2563eb;
+    color: white;
+    border-color: #2563eb;
+}
+
+/* ===========================
+   Повідомлення
+=========================== */
+
+.empty {
+    color: #9ca3af;
+    font-style: italic;
+}
+
+/* ===========================
+   Адаптивність
+=========================== */
+
+@media (max-width: 900px) {
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .toolbar input {
+        width: 100%;
+    }
+
+    .variant-info {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .stats {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+}
