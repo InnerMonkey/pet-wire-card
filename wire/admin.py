@@ -21,6 +21,11 @@ class CustomUserAdmin(UserAdmin):
 # @admin.register(WireStatus)
 # class  WireStatusAdmin(admin.ModelAdmin):
 #     pass
+class WirePieceInline(admin.TabularInline):
+    model = WirePiece
+    fields = ["length_m"]
+    #classes = ("collapse",)
+    extra = 10
 
 
 @admin.register(WireType)
@@ -30,6 +35,7 @@ class WireTypeAdmin(admin.ModelAdmin):
 
 @admin.register(WireVariant)
 class WireVariantAdmin(admin.ModelAdmin):
+    inlines = [WirePieceInline]
     pass
 
 
