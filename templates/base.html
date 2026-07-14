@@ -1,0 +1,39 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="utf-8">
+    <title>Wire Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% block css%}
+    {% endblock %}
+    {% block js %}
+    {% endblock %}
+</head>
+
+<body>
+    <div class="sidebar">
+        <h2>⚡ Wire</h2>
+            <a href="#">🏠 Головна</a>
+            <a href="{% url 'wire:inventory-list' %}">📦 Склад</a>
+            <a href="#">🧩 Типи проводів</a>
+            <a href="#">📐 Варіанти</a>
+            <a href="#">🏭 Виробники</a>
+            <a href="#">🎨 Кольори</a>
+    </div>
+    <div class="content">
+        <div class="topbar"><input placeholder="Пошук..."><span>Адміністратор</span></div>
+        <h1>Інформаційна консоль</h1>
+        <div>
+
+        </div>
+        <div class="panel">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+</body>
+
+</html>
