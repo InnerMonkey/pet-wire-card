@@ -1,38 +1,62 @@
-{% load static %}
-
 <!DOCTYPE html>
 <html lang="uk">
 
 <head>
     <meta charset="utf-8">
-    <title>Wire Dashboard</title>
-    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <!-- Попереднє з'єднання з Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Підключення шрифту Manrope -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
     {% block css%}
     {% endblock %}
     {% block js %}
     {% endblock %}
+    <title>{% block title %} Wire Card - Dashboard {% endblock %}</title>
 </head>
 
 <body>
-    <div class="sidebar">
-        <h2>⚡ Wire</h2>
-            <a href="#">🏠 Головна</a>
-            <a href="{% url 'wire:inventory-list' %}">📦 Склад</a>
-            <a href="#">🧩 Типи проводів</a>
-            <a href="#">📐 Варіанти</a>
-            <a href="#">🏭 Виробники</a>
-            <a href="#">🎨 Кольори</a>
-    </div>
-    <div class="content">
-        <div class="topbar"><input placeholder="Пошук..."><span>Адміністратор</span></div>
-        <h1>Інформаційна консоль</h1>
-        <div>
+    <div class="page">
+        <header class="site-header">
+            <div class="container">
+                <a class="brand" href="#"> <span class="brand__logo"></span>Wire Card</a>
 
-        </div>
-        <div class="panel">
+                <nav class="main-nav">
+                    <a class="nav-link" href="#"><svg viewBox="0 0 24 24" width="18" height="18" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            aria-hidden="true">
+                            <path d="M3 11l9-8 9 8"></path>
+                            <path d="M5 10v10h14V10"></path>
+                        </svg> Головна </a>
+
+                    <a class="nav-link" href="{% url 'wire:inventory-list' %}"><svg viewBox="0 0 24 24" width="18"
+                            height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" aria-hidden="true">
+                            <path d="M21 8l-9-5-9 5v8l9 5 9-5V8z"></path>
+                            <path d="M3 8l9 5 9-5"></path>
+                            <path d="M12 13v8"></path>
+                        </svg> Склад </a>
+                </nav>
+
+                <button class="user" type="button">
+                    Адміністратор
+                </button>
+            </div>
+        </header>
+
+        <main class="container">
             {% block content %}
             {% endblock %}
-        </div>
+        </main>
+
+        <footer class="site-footer">
+            <div class="container">
+                <p>© 2024 Інформаційна панель проводів.</p>
+            </div>
+        </footer>
     </div>
 </body>
 

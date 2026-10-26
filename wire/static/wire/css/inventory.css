@@ -8,37 +8,169 @@
     box-sizing: border-box;
 }
 
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: #f3f5f8;
-    color: #333;
+/* ===========================
+   Заголовок сторінки
+=========================== */
+
+.page-head {
+    padding: 46px 0 32px;
 }
 
-.container {
-    width: 95%;
-    max-width: 1600px;
-    margin: 40px auto;
+.page-head h1 {
+    margin: 0;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.2;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.55);
 }
 
-h1 {
-    margin-bottom: 30px;
-    color: #1f2937;
+.page-head p {
+    margin: 8px 0 0;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+    color: #4b607f;
 }
 
 /* ===========================
-   Панель пошуку
+   Основна панель інвентарю
+=========================== */
+
+.layout {
+    display: grid;
+    grid-template-columns: 248px 1fr;
+    gap: 24px;
+    align-items: start;
+}
+
+/* ===========================
+   Фільтри
+=========================== */
+
+.filters {
+    padding: 20px;
+    border-radius: 18px;
+    background: linear-gradient(180deg, #f8f0e8, #efe2d4);
+    box-shadow: 0 10px 30px rgba(90, 60, 30, 0.14),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+}
+
+.filters fieldset {
+    min-width: 0;
+    margin: 0;
+    padding: 0 0 18px;
+    border: 0;
+}
+
+.filters fieldset+fieldset {
+    padding-top: 18px;
+    border-top: 1px solid #e0cfbd;
+}
+
+.filters legend {
+    float: left;
+    width: 100%;
+    padding: 0 0 7px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .07em;
+    line-height: 18px;
+    text-transform: uppercase;
+    color: #4b607f;
+}
+
+.filters legend+.option {
+    clear: both;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 32px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.option input {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    accent-color: #1d1d1f;
+}
+
+.count {
+    margin-left: auto;
+    height: 20px;
+    padding: 0 6px;
+    border-radius: 999px;
+    background: #ecdfd0;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 20px;
+    color: #4b607f;
+}
+
+.btn-reset {
+    width: 100%;
+    height: 40px;
+    margin-top: 2px;
+    border: 1px solid #e0d0c0;
+    border-radius: 10px;
+    background: linear-gradient(180deg, #f9f2ed, #ede0d2);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .08);
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2f3b4f;
+    cursor: pointer;
+}
+
+.btn-reset:hover {
+    background: #fff;
+}
+
+/* ===========================
+   Панель інструментів
 =========================== */
 
 .toolbar {
-    margin-bottom: 30px;
+    display: flex;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.toolbar input,
+.toolbar select {
+    height: 44px;
+    padding: 0 16px;
+    border: 1px solid #dfcfbf;
+    border-radius: 12px;
+    background: #f6ede4;
+    box-shadow: 0 2px 6px rgba(120, 80, 40, .08);
+    font: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    color: #2f3b4f;
 }
 
 .toolbar input {
-    width: 350px;
-    padding: 12px;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    font-size: 16px;
+    flex: 1;
+    min-width: 0;
+}
+
+.toolbar input::placeholder {
+    color: #8c8a92;
+}
+
+.toolbar select {
+    width: 195px;
+}
+
+.toolbar :focus-visible {
+    outline: 2px solid #f9863b;
+    outline-offset: 1px;
 }
 
 /* ===========================
@@ -47,205 +179,321 @@ h1 {
 
 .cards {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 25px;
-    align-items: start;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.cards>.card[open] {
+    grid-column: 1/-1;
 }
 
 /* ===========================
    Картка
 =========================== */
-
 .card {
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,.08);
-    transition: .2s;
+    --edge: var(--accent, #536888);
+    --glow: transparent;
+
+    position: relative;
+    /*overflow: hidden;*/
+    border-radius: 16px;
+
+    background: linear-gradient(180deg,
+            #2a2a2e 0,
+            #1d1d1f 30%,
+            #141415 100%);
+
+    box-shadow:
+        0 10px 24px rgba(30, 20, 10, .3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.07);
+
+    color: #fff;
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+
+
+/*Бокова полоска картки*/
+.card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 28px;
+    border-radius: 16px 0 0 16px;
+    background: linear-gradient(90deg,
+            var(--edge) 4px,
+            var(--glow) 4px,
+            rgba(0, 0, 0, 0) 100%);
 }
 
 .card:hover {
-    box-shadow: 0 8px 18px rgba(0,0,0,.15);
+    transform: translateY(-2px);
+    box-shadow:
+        0 14px 28px rgba(30, 20, 10, 0.36),
+        inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+.card.is-active {
+    --glow: color-mix(in srgb, var(--edge) 22%, transparent);
+}
+
+.card[open] {
+    background: linear-gradient(180deg,
+            #2a2a2e 0,
+            #1d1d1f 12%,
+            #141415 100%);
+}
+
+.card[open]:hover {
+    transform: none;
+    box-shadow:
+        0 10px 24px rgba(30, 20, 10, .3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+.card:has(> .card-header:focus-visible) {
+    outline: 2px solid #f9863b;
+    outline-offset: 3px;
 }
 
 /* ===========================
    Заголовок картки
 =========================== */
-
-.card summary {
+.card-header {
+    position: relative;
+    height: 104px;
+    padding: 16px 26px 20px;
     list-style: none;
+    cursor: pointer;
 }
 
-.card summary::-webkit-details-marker {
+.card-header::-webkit-details-marker {
     display: none;
 }
 
-.card-header {
-    background: #2563eb;
-    color: white;
-    padding: 18px 22px;
-    cursor: pointer;
-    user-select: none;
-    position: relative;
-}
-
-.card-header:hover {
-    background: #1d4ed8;
-}
-
-.card-header h2 {
-    margin-bottom: 10px;
-    font-size: 22px;
-}
-
-
-/* Стрілка */
-
+/*Стрілка картки*/
 .card-header::after {
-    content: "▶";
+    content: "";
     position: absolute;
-    right: 20px;
+    top: 24px;
+    right: 21px;
+    width: 7px;
+    height: 7px;
+    border-top: 2px solid #cfc8c0;
+    border-right: 2px solid #cfc8c0;
+    transform: rotate(45deg);
+}
+
+
+.card[open] .card-header {
+    height: auto;
+    padding-bottom: 18px;
+}
+
+.card[open] .card-header::after{
     top: 22px;
-    font-size: 16px;
-    transition: transform .2s ease;
+    transform: rotate(135deg);
 }
 
-.card[open] .card-header::after {
-    content: "▼";
+.card.is-active .card-header::after {
+    border-color: var(--edge);
 }
 
-.card[open] {
-    grid-column: 1 / -1;
+.card-title {
+    margin: 0 0 11px;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 26px;
+    white-space: nowrap;
 }
-/* ===========================
-   Статистика
-=========================== */
 
-.stats {
+/* Статистика */
+.card-stats {
     display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    font-size: 14px;
+    gap: 22px;
+    margin: 0;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 18px;
+    color: #b9aea2;
+}
+.card-stats strong {
+    margin-left: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #e8e4de;
+}
+.card.is-active .card-stats strong {
+    color: var(--edge);
 }
 
-.stats strong {
-    color: white;
-}
+
 
 /* ===========================
    Вміст картки
 =========================== */
-
 .card-body {
-    padding: 20px;
+    padding: 20px 26px 28px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+
+.empty {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 500;
+    color: #b9aea2;
+}
+
+.card-variant + .card-variant {
+    margin-top: 22px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
 /* ===========================
    Варіант проводу
 =========================== */
-
-.variant {
-    padding-bottom: 20px;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #e5e7eb;
-}
-
-.variant:last-child {
-    margin-bottom: 0;
-    border-bottom: none;
-}
-
-.variant-header {
-    font-size: 18px;
-    font-weight: bold;
-    color: #111827;
-    margin-bottom: 10px;
-}
-
-/* ===========================
-   Інформація про варіант
-=========================== */
-
-.variant-info {
+.card-variant-title {
     display: flex;
     flex-wrap: wrap;
-    gap: 15px;
-    margin-bottom: 15px;
-    color: #6b7280;
-    font-size: 15px;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
 }
 
-.total {
-    color: #2563eb;
-    background: #eef4ff;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 14px;
+.card-variant-maker {
+    margin: 6px 0 14px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #b9aea2;
 }
 
+.card-total {
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: color-mix(in srgb,var(--accent, #f9863b) 20%, transparent);
+    font-size: 12px;
+    font-weight: 700;
+    color: color-mix(in srgb, var(--aacent, #f9863b) 65%, #fff);
+}
 /* ===========================
    Контейнер шматків
 =========================== */
-
-.pieces {
+.card-pieces {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-}
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
 
+}
 /* ===========================
    Шматок
 =========================== */
-
-.piece {
-    min-width: 65px;
-    padding: 8px 12px;
-    text-align: center;
-    background: #f8fafc;
-    border: 1px solid #cbd5e1;
-    border-radius: 6px;
+.card-piece {
+    position: relative;
+    padding: 3px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    font-size: 14px;
+    font-weight: 700;
+    color: #e8e4de;
     cursor: pointer;
-    font-weight: bold;
-    transition: .2s;
 }
 
-.piece:hover {
-    background: #2563eb;
-    color: white;
-    border-color: #2563eb;
+.card-piece:hover {
+    background: rgba(255, 255, 255, 0.1);
 }
 
-/* ===========================
-   Повідомлення
-=========================== */
+.card-piece:focus {
+    outline: 0;
+}
+.card-piece:focus-within {
+    border-color: var(--accent, #f9863b);
+    background: rgba(255, 255, 255, 0.1);
+}
 
-.empty {
-    color: #9ca3af;
-    font-style: italic;
+/* Контексне меню шматка:opens on left click (li has tabindex, menu shows on :focus-within) */
+.card-piece-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    z-index: 20;
+    min-width: 176px;
+    margin: 0;
+    padding: 6px;
+    list-style: none;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    background: #1d1d1f;
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.45);
+    cursor: default;
+}
+
+.card-piece:focus-within .card-piece-menu {
+    display: block;
+}
+
+.card-piece-menu li + li:last-child {
+    margin-top: 4px;
+    padding-top: 4px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.card-piece-action {
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: left;
+    white-space: nowrap;
+    color: #e8e4de;
+    cursor: pointer;
+}
+.card-piece-action:hover,
+.card-piece-action:focus-visible {
+    background: rgba(255, 255, 255, 0.08);
+    outline: 0;
+}
+
+.card-piece-action--danger {
+    color: #ff7b72;
+}
+.card-piece-action--danger:hover,
+.card-piece-action--danger:focus-visible {
+    background: rgba(239,83,80,0.16);
+}
+/* Categories */
+.cat-power {
+    --accent: #ef5350;
+}
+
+.cat-flex {
+    --accent: #2fbf85;
+}
+
+.cat-network {
+    --accent: #4d8df7;
+}
+
+.cat-mount {
+    --accent: #a07cf2;
 }
 
 /* ===========================
    Адаптивність
 =========================== */
-
-@media (max-width: 900px) {
-
-    .cards {
-        grid-template-columns: 1fr;
-    }
-
-    .toolbar input {
-        width: 100%;
-    }
-
-    .variant-info {
-        flex-direction: column;
-        gap: 6px;
-    }
-
-    .stats {
-        flex-direction: column;
-        gap: 6px;
-    }
-
-}
